@@ -1,21 +1,22 @@
+let windowCount = 0;
+
 function setup() {
-    createCanvas(windowWidth, windowHeight, SVG);
+  noCanvas();
+  createLimitedWindows(10); // createInfiniteWindows(); 무한대로 생성
 }
 
-function keyPressed(event){ // 엔터키로 저장하는 법
-    console.log(event.key);
-    if( event.key === "Enter") {
-        save("제목","svg")
+function createLimitedWindows(limit) { //function createInfiniteWindows()
+  const intervalId = setInterval(() => { //setInterval(() =>
+    if (windowCount >= limit) {
+      clearInterval(intervalId);
+      return; // 정지
     }
-}
 
-function draw() {
-  
-    background(200);
+    let x = random(windowWidth);
+    let y = random(windowHeight);
+    let newWindow = window.open('', '_blank', `width=400,height=200,left=${x},top=${y}`);
+    newWindow.document.body.innerHTML = '<p style="font-size:24px;">당신은 피조물입니까?</p>'; 
 
-    fill(7,105,0, 95);
-    noStroke();
-    ellipse(495,600,240,160); // 연한 잎
-
-
+    windowCount++;
+  }, 800); // 0.8 초
 }
